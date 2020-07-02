@@ -2,6 +2,8 @@
 
 ## Scripts
 - `experiment.py` — main experimental loop performing 20 000 of 5x5 CV
+- `helper.py` — helper with tests and datasets lister
+- `analysis.py` — test performer
 
 ## Directories
 - `datasets` — 18 experimental datasets

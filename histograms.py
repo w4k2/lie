@@ -25,6 +25,10 @@ colors = {1: "black", 2: "blue", 3: "red"}
 
 datasets = helper.datasets()
 
+# Dataset, pair, test, 3-cases
+all_cases = np.zeros((len(datasets), len(pairs), len(tests), 3))
+
+
 for d_id, dataset in enumerate(datasets):
     print("# Dataset %i" % d_id)
     scores = np.load("scores/%s.npy" % dataset[1])
@@ -46,6 +50,30 @@ for d_id, dataset in enumerate(datasets):
                 / t_stats.shape
                 * 100
             )
+            all_cases[d_id, pid, t_id] = cases
+
+            fig, ax = plt.subplots(1, 1, figsize=(4.83, 2.5))
+            h = ax.hist(t_stats, bins=64, color="black", range=(-20, 20))
+            hmax = np.max(h[0])
+            ax.vlines(
+                [-critics[critic_id], critics[critic_id]],
+                ymin=0,
+                ymax=hmax,
+                ls=":",
+                label="critical values",
+                color="red",
+                lw=1,
+            )
+            ax.set_yticks([])
+            ax.set_ylim(0, 1 * hmax)
+            ax.spines["right"].set_color("none")
+            ax.spines["left"].set_color("none")
+            ax.spines["top"].set_color("none")
+            fig.subplots_adjust(top=0.99, bottom=0.1, left=0, right=1)
+
+            plt.savefig("foo.png")
+            plt.savefig("figures/%s_%i_%i.eps" % (dataset[1], pid, t_id))
+            plt.savefig("figures/%s_%i_%i.png" % (dataset[1], pid, t_id))
 
             print(cases)
 
@@ -162,3 +190,5 @@ for d_id, dataset in enumerate(datasets):
         # exit()
         # plt.savefig("figures/%s_%i.png" % (dataset[1], pid))
         plt.savefig("figures/%s_%i.eps" % (dataset[1], pid))
+
+np.save("cases", all_cases)

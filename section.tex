@@ -62,12 +62,6 @@
 
 \begin{document}
 
-\section{Experimental studies illustrating improper use of evaluation methodology}
-
-This section aims to show the chosen flaws of commonly used experimental protocols,
-i.e., how their improper use can dramatically change the results of classifier comparison.
-In the first experiment, we will focus on the dataset shift problem in cross-validation while in the second, we show the problems with mean-ranks in Friedman test.
-
 
 \subsection{Problems with dataset shift in cross-validation}
 
@@ -81,7 +75,7 @@ We want to show that:
 }
 \end{quote}
 
-Both the source code used to conduct the described experiment as well as a report with all the results are available in public Git repository\footnote{\url{https://github.com/w4k2/fair-evaluation}}. %A single instance of the problem under consideration is a typical classification experiment employing 5-fold cross-validation in the data division, whose aim is to compare the quality of two classifiers according to the basic accuracy metric. To assess the statistical significance of differences between the achieved accuracies, the \emph{t test for repeated cross-validation} is used, taking the significance level $\alpha=0.05$.
+Both the source code used to conduct the described experiment as well as a report with all the results are available in public Git repository\footnote{\url{https://github.com/w4k2/lie}}. %A single instance of the problem under consideration is a typical classification experiment employing 5-fold cross-validation in the data division, whose aim is to compare the quality of two classifiers according to the basic accuracy metric. To assess the statistical significance of differences between the achieved accuracies, the \emph{t test for repeated cross-validation} is used, taking the significance level $\alpha=0.05$.
 
 Eighteen popular datasets from \emph{\textsc{uci} Machine Learning Repository} (see Table \ref{tab:pdatasets}) \cite{Dua:2019} and three classifiers (as implemented in the \textsc{scikit-learn} library and with default parameters) % were adopted for the set of problems being the basis for the experiments, and the research itself was carried out comparing, on a peer-to-peer basis, three classifiers, according to their implementations included in the \textsc{scikit-learn} library and assuming their default parameters:
 

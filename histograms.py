@@ -52,7 +52,7 @@ for d_id, dataset in enumerate(datasets):
             )
             all_cases[d_id, pid, t_id] = cases
 
-            fig, ax = plt.subplots(1, 1, figsize=(4.83, 2.5))
+            fig, ax = plt.subplots(1, 1, figsize=(5, 2))
             h = ax.hist(t_stats, bins=64, color="black", range=(-20, 20))
             hmax = np.max(h[0])
             ax.vlines(
@@ -69,7 +69,7 @@ for d_id, dataset in enumerate(datasets):
             ax.spines["right"].set_color("none")
             ax.spines["left"].set_color("none")
             ax.spines["top"].set_color("none")
-            fig.subplots_adjust(top=0.99, bottom=0.1, left=0, right=1)
+            fig.subplots_adjust(top=0.99, bottom=0.12, left=0, right=1)
 
             plt.savefig("foo.png")
             plt.savefig("figures/%s_%i_%i.eps" % (dataset[1], pid, t_id))

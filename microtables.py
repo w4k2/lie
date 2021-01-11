@@ -11,7 +11,7 @@ def t_to_p(tt, dd=4):
     return pval
 
 # 24, 4 [alpha=.05]
-critics = [2.0639, 2.7764]
+critics = [2.0639, 2.7764, 2.57]
 corrs = np.linspace(0.1, 0.6, 6)
 clfs = ["gnb", "knn", "cart"]
 pairs = [(0, 1), (0, 2), (1, 2)]
@@ -25,6 +25,7 @@ tests = [
     (1, "parametric-correction (corr=.5)"),
     (1, "parametric-correction (corr=.6)"),
     (1, "regular"),
+    (2, "cv52cft")
 ]
 colors = {1: "black", 2: "blue", 3: "red"}
 
@@ -41,7 +42,10 @@ for d_id, dataset in enumerate(datasets):
         print("\t- pair %i vs %i" % pair)
 
         for t_id, (critic_id, test_name) in enumerate(tests):
-            t_stats = np.load("tests/%s_p%i_t%i.npy" % (dataset[1], pid, t_id))
+            if critic_id != 2:
+                t_stats = np.load("tests/%s_p%i_t%i.npy" % (dataset[1], pid, t_id))
+            else:
+                t_stats = np.load("tests/%s_p%i_f.npy" % (dataset[1], pid))
             if t_id != 0:
                 t_scores = scores.reshape(-1,5,3)[:,:,pair]
             else:
@@ -119,7 +123,7 @@ for d_id, dataset in enumerate(datasets):
             ending = "\\bottomrule\n\\end{tabularx}"
             table = header + "\n" + approx + "\n" + eq + "\n" + minus + "\n" + plus + ending
 
-            #print(table)
+            # print(table)
 
             text_file = open("tables/%s_%i_%i.tex" % (dataset[1], pid, t_id), "wt")
             n = text_file.write(table)

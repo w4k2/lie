@@ -6,7 +6,7 @@ from tqdm import tqdm
 np.set_printoptions(precision=3, suppress=True)
 
 # 24, 4 [alpha=.05]
-critics = [2.0639, 2.7764]
+critics = [2.0639, 2.7764, 2.57]
 corrs = np.linspace(0.1, 0.6, 6)
 clfs = ["GNB", "kNN", "CART"]
 pairs = [(0, 1), (0, 2), (1, 2)]
@@ -20,6 +20,7 @@ tests = [
     (1, "parametric-correction (corr=.5)"),
     (1, "parametric-correction (corr=.6)"),
     (1, "regular"),
+    (2, "cv52cft")
 ]
 colors = {1: "black", 2: "blue", 3: "red"}
 
@@ -38,7 +39,10 @@ for d_id, dataset in enumerate(datasets):
 
         for t_id, (critic_id, test_name) in enumerate(tests):
             print(t_id, critic_id, test_name)
-            t_stats = np.load("tests/%s_p%i_t%i.npy" % (dataset[1], pid, t_id))
+            if critic_id != 2:
+                t_stats = np.load("tests/%s_p%i_t%i.npy" % (dataset[1], pid, t_id))
+            else:
+                t_stats = np.load("tests/%s_p%i_f.npy" % (dataset[1], pid))
             cases = (
                 np.array(
                     [
@@ -53,7 +57,7 @@ for d_id, dataset in enumerate(datasets):
             all_cases[d_id, pid, t_id] = cases
 
             fig, ax = plt.subplots(1, 1, figsize=(4.83, 2.5))
-            h = ax.hist(t_stats, bins=64, color="black", range=(-20, 20))
+            h = ax.hist(t_stats, bins=64, color="black", range=(-30, 30))
             hmax = np.max(h[0])
             ax.vlines(
                 [-critics[critic_id], critics[critic_id]],
